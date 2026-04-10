@@ -1,36 +1,33 @@
 const express = require("express");
-const fetch = require("node-fetch");
 
 const app = express();
-
 app.use(express.json());
 
-// 🔥 ROOT FIX (important)
+// ROOT
 app.get("/", (req, res) => {
-  return res.status(200).send("Backend Running 🚀");
+  res.send("Backend Running 🚀");
 });
 
-// SWAP ROUTE
+// SWAP (REAL JUPITER)
 app.post("/swap", async (req, res) => {
   try {
     const { inputMint, outputMint, amount } = req.body;
 
     const url = `https://quote-api.jup.ag/v6/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}&slippageBps=50`;
 
-    const response = await fetch(url);
+    const response = await fetch(url); // ✅ built-in fetch
     const data = await response.json();
 
-    return res.json(data);
+    res.json(data);
   } catch (err) {
-    console.error("Swap error:", err);
-    return res.status(500).json({ error: "Swap failed" });
+    console.error(err);
+    res.status(500).json({ error: "Swap failed" });
   }
 });
 
-// 🔥 MOST IMPORTANT (Railway)
+// PORT FIX
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
-
