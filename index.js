@@ -2,9 +2,7 @@
 const cors = require("cors");
 
 // ✅ FIX fetch (Railway compatible)
-const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
-
+const fetch = require("node-fetch");
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -13,7 +11,11 @@ const PORT = process.env.PORT || 8080;
 
 // ✅ Root route
 app.get("/", (req, res) => {
-  res.send("Cheetah Backend Running 🚀");
+  try {
+    res.send("Backend Running 🚀");
+  } catch (err) {
+    res.status(500).send("error");
+  }
 });
 
 // ✅ SAFE Quote API
