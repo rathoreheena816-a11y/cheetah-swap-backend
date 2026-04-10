@@ -1,12 +1,14 @@
 const express = require("express");
 const app = express();
 
+// test route
 app.get("/", (req, res) => {
-  res.send("LIVE 🚀");
+  res.send("Backend Live 🚀");
 });
 
+// IMPORTANT — Railway ke liye
 const PORT = process.env.PORT;
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
